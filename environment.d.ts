@@ -5,6 +5,8 @@ declare global {
         interface ProcessEnv {
             NEXT_PUBLIC_PROJECT_ID: string
             MONGO: string
+            WHEELER_API_KEY: string
+            BASE_URL: string
         }
     }
 }
