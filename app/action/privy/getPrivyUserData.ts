@@ -19,12 +19,12 @@ export async function getPrivyUserData () {
         });
 
         if (!response.ok) {
-        throw new Error("Failed to update metadata");
+            throw new Error("Failed to update metadata");
         }
 
         const data = await response.json();
         console.log("Success:", data);
-        return data;
+        return data.data;
     } catch (error) {
         console.error("Error:", error);
     }
