@@ -7,6 +7,8 @@ declare global {
             MONGO: string
             WHEELER_API_KEY: string
             BASE_URL: string
+            NEXT_PUBLIC_PRIVY_APP_ID: string
+            PRIVY_APP_SECRET: string
         }
     }
 }
