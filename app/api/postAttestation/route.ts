@@ -13,12 +13,13 @@ export  async function POST(
         return authResponse;
     }
     
-    const { address, UID } = await req.json()
+    const { address, week, UID } = await req.json()
 
     try {
         await connectDB()
         const attestation = await Attestation.create({ 
             address: address, 
+            week: week,
             UID: UID
         })
         return new Response(JSON.stringify(attestation))

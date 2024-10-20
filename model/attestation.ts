@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import { unique } from "viem/chains"
 const { Schema } = mongoose
 
 const AttestationSchema = new mongoose.Schema(
@@ -8,10 +7,13 @@ const AttestationSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        week: {
+            type: String,
+            required: true,
+        },
         UID: {
             type: String,
             required: true,
-            unique: true
         }
     },
     {

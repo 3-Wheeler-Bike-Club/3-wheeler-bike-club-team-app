@@ -2,6 +2,7 @@
 
 export async function postAttestationAction (
     address: string, 
+    week: string,
     UID: string, 
 ) {
     try {
@@ -13,6 +14,7 @@ export async function postAttestationAction (
             },
             body: JSON.stringify({
                 address,
+                week,
                 UID, 
             })
         }) 
