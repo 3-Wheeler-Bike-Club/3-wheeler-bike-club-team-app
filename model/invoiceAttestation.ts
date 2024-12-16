@@ -1,17 +1,13 @@
 import mongoose from "mongoose"
 const { Schema } = mongoose
 
-const AttestationSchema = new mongoose.Schema(
+const InvoiceAttestationSchema = new mongoose.Schema(
     {
         address: {
             type: String,
             required: true,
         },
-        week: {
-            type: String,
-            required: true,
-        },
-        UID: {
+        invoiceSchemaID: {
             type: String,
             required: true,
         }
@@ -21,6 +17,6 @@ const AttestationSchema = new mongoose.Schema(
     }
 )
 
-const Attestation = mongoose.models.Attestation || mongoose.model("Attestation", AttestationSchema)
+const InvoiceAttestation = mongoose.models.InvoiceAttestation || mongoose.model("InvoiceAttestation", InvoiceAttestationSchema)
 
-export default Attestation
+export default InvoiceAttestation

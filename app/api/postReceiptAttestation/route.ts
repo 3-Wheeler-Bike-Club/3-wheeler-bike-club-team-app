@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import ReceiptAttestation from "@/model/receiptAttestation";
 import connectDB from "@/utils/db/mongodb";
-import Attestation from "@/model/attestation";
 import { middleware } from "@/utils/middleware";
 
 
@@ -13,16 +13,15 @@ export  async function POST(
         return authResponse;
     }
     
-    const { address, week, UID } = await req.json()
+    const { address, receiptSchemaID } = await req.json()
 
     try {
         await connectDB()
-        const attestation = await Attestation.create({ 
+        const receiptAttestation = await ReceiptAttestation.create({ 
             address: address, 
-            week: week,
-            UID: UID
+            receiptSchemaID: receiptSchemaID
         })
-        return new Response(JSON.stringify(attestation))
+        return new Response(JSON.stringify(receiptAttestation))
     } catch (error) {
         return new Response(JSON.stringify(error))
     }
