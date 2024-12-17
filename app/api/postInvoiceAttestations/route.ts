@@ -13,12 +13,24 @@ export  async function POST(
         return authResponse;
     }
     
-    const { addresses, invoiceSchemaID } = await req.json()
+    const { addresses, invoiceSchemaIDs } = await req.json()
     
+
     // Validate input
-    if (!Array.isArray(addresses) || !invoiceSchemaID) {
+    if (!Array.isArray(addresses) || !Array.isArray(invoiceSchemaIDs)) {
         return new Response(
-            JSON.stringify({ error: "Invalid input. `addresses` must be an array and `invoiceSchemaID` is required." }),
+            JSON.stringify({
+                error: "`addresses` and `invoiceSchemaID` must both be arrays.",
+            }),
+            { status: 400 }
+        );
+    }
+    // Validate that the two arrays are the same length
+    if (addresses.length !== invoiceSchemaIDs.length) {
+        return new Response(
+            JSON.stringify({
+                error: "`addresses` and `invoiceSchemaID` arrays must have the same length.",
+            }),
             { status: 400 }
         );
     }
@@ -30,12 +42,13 @@ export  async function POST(
 
         // Split addresses into batches and insert each batch
         for (let i = 0; i < addresses.length; i += batchSize) {
-            const batch = addresses.slice(i, i + batchSize);
+            const batchAddresses = addresses.slice(i, i + batchSize);
+            const batchInvoiceIDs = invoiceSchemaIDs.slice(i, i + batchSize);
 
-            // Map the batch to documents
-            const documents = batch.map((address) => ({
+            // Map each address to its respective invoice ID
+            const documents = batchAddresses.map((address, index) => ({
                 address: address,
-                invoiceSchemaID: invoiceSchemaID,
+                invoiceSchemaID: batchInvoiceIDs[index],
             }));
 
             // Bulk insert the batch
