@@ -14,7 +14,6 @@ export  async function POST(
     }
     
     const { addresses, invoiceSchemaIDs } = await req.json()
-    
 
     // Validate input
     if (!Array.isArray(addresses) || !Array.isArray(invoiceSchemaIDs)) {

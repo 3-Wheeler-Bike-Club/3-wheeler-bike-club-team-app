@@ -7,6 +7,10 @@ const ReceiptAttestationSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        invoiceSchemaID: {
+            type: String,
+            required: true,
+        },
         receiptSchemaID: {
             type: String,
             required: true,

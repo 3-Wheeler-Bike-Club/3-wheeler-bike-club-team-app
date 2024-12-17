@@ -16,7 +16,6 @@ export async function POST(
         await connectDB()
         const invoiceAttestations = await InvoiceAttestation.find({ address: address })
 
-       
         return new Response(JSON.stringify(invoiceAttestations));
     } catch (error) {
         return new Response(JSON.stringify(error))
