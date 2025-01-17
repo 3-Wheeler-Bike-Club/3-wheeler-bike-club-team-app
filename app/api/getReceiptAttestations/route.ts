@@ -11,12 +11,11 @@ export async function POST(
     if (authResponse.status !== 200) {
         return authResponse;
     }
-    const { invoiceSchemaID } = await req.json()
+    const { address } = await req.json()
     try {
         await connectDB()
-        const receiptAttestations = await ReceiptAttestation.findOne({ invoiceSchemaID: invoiceSchemaID })
-
-       
+        const receiptAttestations = await ReceiptAttestation.find({ address: address })
+        
         return new Response(JSON.stringify(receiptAttestations));
     } catch (error) {
         return new Response(JSON.stringify(error))
