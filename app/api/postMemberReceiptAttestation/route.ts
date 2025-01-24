@@ -13,14 +13,14 @@ export  async function POST(
         return authResponse;
     }
     
-    const { address, invoiceSchemaID, receiptSchemaID, amount, currency, week, score } = await req.json()
+    const { address, memberInvoiceAttestationID, memberReceiptAttestationID, amount, currency, week, score } = await req.json()
 
     try {
         await connectDB()
         const memberReceiptAttestation = await MemberReceiptAttestation.create({ 
             address: address, 
-            invoiceSchemaID: invoiceSchemaID,
-            receiptSchemaID: receiptSchemaID,
+            memberInvoiceAttestationID: memberInvoiceAttestationID,
+            memberReceiptAttestationID: memberReceiptAttestationID,
             amount: amount,
             currency: currency,
             week: week,
