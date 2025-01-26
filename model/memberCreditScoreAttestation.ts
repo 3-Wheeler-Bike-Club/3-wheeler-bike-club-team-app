@@ -5,11 +5,14 @@ const MemberCreditScoreAttestationSchema = new mongoose.Schema(
         address: {
             type: String,
             required: true,
+            unique: true,
         },
+        /*
         memberBadgeAttestationID: {
             type: String,
             required: true,
         },
+        */
         memberCreditScoreAttestationID: {
             type: String,
             required: true,
@@ -18,7 +21,11 @@ const MemberCreditScoreAttestationSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        weeksActive: {
+        paidWeeks: {
+            type: Number,
+            required: true,
+        },
+        invoicedWeeks: {
             type: Number,
             required: true,
         },
