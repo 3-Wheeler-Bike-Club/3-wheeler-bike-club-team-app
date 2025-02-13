@@ -17,11 +17,21 @@ const MemberBadgeAttestationSchema = new mongoose.Schema(
         driverID: {
             type: String,
             required: true,
-        }
+        },
+        unionApplied: {
+            type: Boolean,
+            required: true,
+        },
+        unionApproved: {
+            type: Boolean,
+            required: true,
+        },
+
     },
     {
         timestamps: true, // Add timestamps
     }
+
 )
 
 const MemberBadgeAttestation = mongoose.models.MemberBadgeAttestation || mongoose.model("MemberBadgeAttestation", MemberBadgeAttestationSchema)

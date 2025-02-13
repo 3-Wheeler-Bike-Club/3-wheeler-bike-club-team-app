@@ -10,6 +10,9 @@ const CurrencyRateSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
+},
+{
+    timestamps: true, // Add timestamps
 })
 
 const CurrencyRate = mongoose.models.CurrencyRate || mongoose.model("CurrencyRate", CurrencyRateSchema)

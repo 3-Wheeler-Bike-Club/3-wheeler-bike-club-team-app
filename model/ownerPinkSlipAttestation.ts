@@ -13,9 +13,34 @@ const OwnerPinkSlipAttestationSchema = new mongoose.Schema(
         vin: {
             type: String,
             required: true,
+            unique: true,
+        },
+        make: {
+            type: String,
+            required: true,
+        },
+        model: {
+            type: String,
+            required: true,
+        },
+        year: {
+            type: String,
+            required: true,
+        },
+        color: {
+            type: String,
+            required: true,
         },
         country: {
             type: String,
+            required: true,
+        },
+        licensePlate: {
+            type: String,
+            required: true,
+        },
+        visualProof: {
+            type: [String],
             required: true,
         },
         ownerProof: {

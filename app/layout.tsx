@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-import '@rainbow-me/rainbowkit/styles.css';
-import { Providers } from "@/providers/providers";
+import { PrivyContext } from "@/providers/PrivyContext";
+
+import { config } from "@/utils/config";
+import { headers } from "next/headers";
+import { cookieToInitialState } from "wagmi";
+import { WagmiContext } from "@/providers/WagmiContext";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { Menu } from "@/components/sidebar/menu";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,12 +33,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const initialState = cookieToInitialState( 
+    config, 
+    headers().get("cookie") 
+  ) 
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <WagmiContext initialState={initialState!}>
+          <PrivyContext>
+            <SidebarProvider defaultOpen={false}>
+                <Menu />
+                {children}
+            </SidebarProvider>
+          </PrivyContext>
+        </WagmiContext>
       </body>
     </html>
   );

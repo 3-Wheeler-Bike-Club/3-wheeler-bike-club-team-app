@@ -1,21 +1,9 @@
-import { Component } from "@/components/dashboard/component";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Wrapper } from "@/components/landing/wrapper";
 
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: 12,
-        }}
-      >
-        <ConnectButton />
-      </div>
-      <div>
-        <Component/>
-      </div>  
+      <Wrapper/>
     </div>
   );
 }
