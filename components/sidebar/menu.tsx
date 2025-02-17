@@ -1,5 +1,5 @@
 "use client"
-import { Caravan, Home, Settings } from "lucide-react"
+import { Caravan, Settings } from "lucide-react"
 import {
     Sidebar,
     SidebarContent,
@@ -66,19 +66,7 @@ export function Menu() {
             <SidebarGroup>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton 
-                      onClick={()=>{
-                        router.push("/dashboard")
-                      }}
-                      asChild
-                    >
-                      <div className="flex items-center gap-2">
-                        <Home size={18} color="gold"/>
-                        <span className="text-base font-semibold">Dashboard</span>
-                      </div>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  
 
                   <SidebarMenuItem>
                     <SidebarMenuButton 

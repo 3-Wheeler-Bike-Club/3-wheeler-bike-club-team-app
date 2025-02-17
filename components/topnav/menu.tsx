@@ -1,10 +1,7 @@
-import { Bell, CheckCheck, Copy, MessagesSquare } from "lucide-react";
+import { Bell } from "lucide-react";
 import { SidebarTrigger } from "../ui/sidebar";
 
 import { usePrivy } from "@privy-io/react-auth";
-import { useState } from "react";
-import { shortenAddress } from "@/utils/shorten";
-
 export function Menu() {
 
     const { user } = usePrivy()
@@ -14,17 +11,6 @@ export function Menu() {
 
     const privyUserMetadata = user?.customMetadata
     
-    const [copied, setCopied] = useState<boolean>(false)
-
-    const handleCopy = async () => {
-        if (smartWallet?.address) {
-            await navigator.clipboard.writeText(smartWallet?.address);
-            setCopied(true);
-            setTimeout(() => {
-                setCopied(false);
-            }, 2000);
-        }
-    };
     
     return (
         <>
@@ -35,14 +21,9 @@ export function Menu() {
             <div className="flex justify-between w-full shrink-0">
                 <div className="flex flex-col gap-2">
                     <p><span className="text-sm italic">hello</span>, <span className="font-semibold text-2xl">{privyUserMetadata?.firstname}</span></p>
-                    <div className="flex items-center gap-2">
-                        <p className="text-xs">{ shortenAddress(smartWallet?.address) }</p>
-                        {copied ? <CheckCheck size={12}/> : <Copy size={12} onClick={handleCopy}/>}
-                    </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <MessagesSquare/>
                     <Bell />
                 </div>
             </div>

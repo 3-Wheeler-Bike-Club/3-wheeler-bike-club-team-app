@@ -20,10 +20,10 @@ export async function POST(
         if (status !== 0 && 
             status !== undefined && 
             ownerPinkSlipAttestationID !== undefined &&
-            !invoice && !amount && !tender && !reference) {
+            !amount && !tender && !reference) {
             
             const fleetOrder = await FleetOrder.findOneAndUpdate(
-                { address },
+                { invoice },
                 { 
                     status,
                     ownerPinkSlipAttestationID

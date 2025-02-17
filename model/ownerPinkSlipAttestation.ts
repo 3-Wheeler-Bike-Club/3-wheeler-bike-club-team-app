@@ -6,7 +6,15 @@ const OwnerPinkSlipAttestationSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        invoice: {
+            type: String,
+            required: true,
+        },
         ownerPinkSlipAttestationID: {
+            type: String,
+            required: true,
+        },
+        hirePurchaseAttestationID: {
             type: String,
             required: true,
         },

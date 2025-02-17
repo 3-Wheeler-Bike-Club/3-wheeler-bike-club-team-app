@@ -1,15 +1,24 @@
 import { Menu } from "../topnav/menu";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Caravan } from "lucide-react";
-import { useGetFleetOrders } from "@/hooks/offchain/useGetFleetOrders";
+import { OffchainFleetOrder, useGetFleetOrders } from "@/hooks/offchain/useGetFleetOrders";
 import { DataTable } from "./dataTable";
 import { Columns } from "./columns";
+import { useEffect } from "react";
+import { useState } from "react";
 
 
 export function Authorized() {
 
     const {fleetOrders} = useGetFleetOrders()
-    console.log(fleetOrders)
+    const [fleetOrdersWithCodeZero, setFleetOrdersWithCodeZero] = useState<OffchainFleetOrder[]>([])
+
+    useEffect(() => {
+        if (fleetOrders) {
+            const filtered = fleetOrders.filter(order => order.status === 0)
+            setFleetOrdersWithCodeZero(filtered)
+        }
+    }, [fleetOrders])
     
 
     return (
@@ -19,7 +28,7 @@ export function Authorized() {
                 <div className="flex w-full justify-center">
                     <Alert className="w-full max-w-[66rem]">
                         <Caravan className="h-4 w-4" />
-                        <AlertTitle className="font-bold">New Orders!</AlertTitle>
+                        <AlertTitle className="font-bold">Register Orders!</AlertTitle>
                         <AlertDescription className="text-xs italic">
                             Manage orders, mark status code: 1 when vehicle aquired.
                         </AlertDescription>
@@ -30,9 +39,9 @@ export function Authorized() {
 
                 <div className="flex flex-col h-full p-4 md:p-6 lg:p-8 w-full gap-6 items-center">
                 {
-                    fleetOrders && fleetOrders?.length >= 1 && (
+                    fleetOrdersWithCodeZero && fleetOrdersWithCodeZero?.length >= 1 && (
                         <div className="flex flex-col w-full max-w-[66rem] gap-3">
-                            <DataTable columns={Columns} data={fleetOrders!} />
+                            <DataTable columns={Columns} data={fleetOrdersWithCodeZero!} />
                         </div>
                         
 
