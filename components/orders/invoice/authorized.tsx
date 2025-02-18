@@ -18,20 +18,20 @@ interface AuthorizedProps {
 }
 
 export interface OwnerPinkSlipAttestations {
-    addresses: string[] | undefined;
-    invoices: string[] | undefined;
-    hirePurchaseAttestationIDs: string[] | undefined;
-    ownerPinkSlipAttestationIDs: string[] | undefined;
-    vins: string[] | undefined;
-    makes: string[] | undefined;
-    models: string[] | undefined;
-    years: string[] | undefined;
-    colors: string[] | undefined;
-    countries: string[] | undefined;
-    licensePlates: string[] | undefined;
-    visualProofs: string[][] | undefined;
-    ownerProofs: string[] | undefined;
-    transferProofs: string[] | undefined;
+    addresses: string[];
+    invoices: string[];
+    hirePurchaseAttestationIDs: string[];
+    ownerPinkSlipAttestationIDs: string[];
+    vins: string[];
+    makes: string[];
+    models: string[];
+    years: string[];
+    colors: string[];
+    countries: string[];
+    licensePlates: string[];
+    visualProofs: string[][];
+    ownerProofs: string[];
+    transferProofs: string[];
 }
 
 export function Authorized({ order }: AuthorizedProps) {
@@ -52,42 +52,44 @@ export function Authorized({ order }: AuthorizedProps) {
   async function handleOrderFilling() {
     setLoading(true)
     try {
-        const defaultOwnerPinkSlipAttestationIDs: string[] = []
+        if (ownerPinkSlipAttestations) {
+            const defaultOwnerPinkSlipAttestationIDs: string[] = []
         
     
-        const res = await postOwnerPinkSlipAttestationAction(
-            ownerPinkSlipAttestations?.addresses,
-            ownerPinkSlipAttestations?.invoices,
-            ownerPinkSlipAttestations?.hirePurchaseAttestationIDs,
-            ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs,
-            ownerPinkSlipAttestations?.vins,
-            ownerPinkSlipAttestations?.makes,
-            ownerPinkSlipAttestations?.models,
-            ownerPinkSlipAttestations?.years,
-            ownerPinkSlipAttestations?.colors,
-            ownerPinkSlipAttestations?.countries,
-            ownerPinkSlipAttestations?.licensePlates,
-            ownerPinkSlipAttestations?.visualProofs,
-            ownerPinkSlipAttestations?.ownerProofs,
-            ownerPinkSlipAttestations?.transferProofs
-        )
-        getBackOwnerPinkSlipAttestationByInvoice()
-        if (res && ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs) {
-            for (let i = 0; i < ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs?.length; i++) {
-                defaultOwnerPinkSlipAttestationIDs.push(ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs?.[i])
-            }
-            postFleetOrderAction(
-                undefined,
-                order.invoice,
-                undefined,
-                undefined,
-                undefined,
-                1,
-                defaultOwnerPinkSlipAttestationIDs
+            const res = await postOwnerPinkSlipAttestationAction(
+                ownerPinkSlipAttestations?.addresses,
+                ownerPinkSlipAttestations?.invoices,
+                ownerPinkSlipAttestations?.hirePurchaseAttestationIDs,
+                ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs,
+                ownerPinkSlipAttestations?.vins,
+                ownerPinkSlipAttestations?.makes,
+                ownerPinkSlipAttestations?.models,
+                ownerPinkSlipAttestations?.years,
+                ownerPinkSlipAttestations?.colors,
+                ownerPinkSlipAttestations?.countries,
+                ownerPinkSlipAttestations?.licensePlates,
+                ownerPinkSlipAttestations?.visualProofs,
+                ownerPinkSlipAttestations?.ownerProofs,
+                ownerPinkSlipAttestations?.transferProofs
             )
+            getBackOwnerPinkSlipAttestationByInvoice()
+            if (res && ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs) {
+                for (let i = 0; i < ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs?.length; i++) {
+                    defaultOwnerPinkSlipAttestationIDs.push(ownerPinkSlipAttestations?.ownerPinkSlipAttestationIDs?.[i])
+                }
+                postFleetOrderAction(
+                    undefined,
+                    order.invoice,
+                    undefined,
+                    undefined,
+                    undefined,
+                    1,
+                    defaultOwnerPinkSlipAttestationIDs
+                )
+            }
+            setOwnerPinkSlipAttestations(null)
+            setLoading(false)
         }
-        setOwnerPinkSlipAttestations(null)
-        setLoading(false)
     } catch (error) {
         console.log(error)
         setLoading(false)
@@ -155,7 +157,7 @@ export function Authorized({ order }: AuthorizedProps) {
                         )
                     }
                     {ownerPinkSlipAttestationByInvoice && (
-                    <div className="flex w-full  max-w-[66rem]justify-center items-center">
+                    <div className="flex w-full max-w-[66rem] justify-center items-center">
                         <div className="flex flex-col w-full gap-4">
                             {ownerPinkSlipAttestationByInvoice.map((ownerPinkSlipsAttestation) => (
                                 <div key={ownerPinkSlipsAttestation.vin} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full gap-4 p-6 rounded-lg bg-gray-50">
@@ -189,7 +191,7 @@ export function Authorized({ order }: AuthorizedProps) {
                     </div>
                     )}    
                     {ownerPinkSlipAttestations && ownerPinkSlipAttestations.vins && ownerPinkSlipAttestations.vins.length > 0 && (
-                        <div className="flex w-full  max-w-[66rem]justify-center items-center">
+                        <div className="flex w-full  max-w-[66rem] justify-center items-center">
                             <div className="flex flex-col w-full max-w-[66rem] gap-4">
                                 {ownerPinkSlipAttestations.vins.map((vin, index) => (
                                     <div key={index} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full gap-4 p-6 rounded-lg bg-gray-50">

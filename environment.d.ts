@@ -1,5 +1,3 @@
-import { string } from "zod"
-
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
@@ -10,6 +8,7 @@ declare global {
             NEXT_PUBLIC_PRIVY_APP_ID: string
             PRIVY_APP_SECRET: string
             PRIVATE_KEY: `0x${string}`
+            ATTEST_PRIVATE_KEY: `0x${string}`
         }
     }
 }

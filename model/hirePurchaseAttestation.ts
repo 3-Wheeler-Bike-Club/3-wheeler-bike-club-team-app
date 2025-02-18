@@ -22,10 +22,6 @@ const HirePurchaseAttestationSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        currency: {
-            type: String,
-            required: true,
-        },
         installments: {
             type: Number,
             required: true,

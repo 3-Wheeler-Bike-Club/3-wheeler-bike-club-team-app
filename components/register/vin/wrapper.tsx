@@ -5,14 +5,13 @@ import { Authorized } from "./authorized";
 import { Unauthorized } from "./unauthorized";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { OwnerPinkSlipAttestation } from "@/hooks/attestation/useGetOwnerPinkSlipAttestationByInvoice";
 
 interface WrapperProps {
-    ownerPinkSlipAttestation: OwnerPinkSlipAttestation
+    vin: string
 }
 
 
-export function Wrapper({ ownerPinkSlipAttestation }: WrapperProps) {
+export function Wrapper({ vin }: WrapperProps) {
     const { user, ready, authenticated } = usePrivy()
     const router = useRouter()
 
@@ -41,7 +40,7 @@ export function Wrapper({ ownerPinkSlipAttestation }: WrapperProps) {
                     <main className="flex w-full h-full">
                     {
                         authenticated
-                        ? <Authorized ownerPinkSlipAttestation={ownerPinkSlipAttestation} />
+                        ? <Authorized vin={vin} />
                         : <Unauthorized/>
                     }
                     </main>

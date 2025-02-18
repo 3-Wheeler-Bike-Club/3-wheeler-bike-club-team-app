@@ -4,7 +4,7 @@ import { attester } from "@/utils/constants/addresses"
 import { ownerPinkSlipSchemaID } from "@/utils/constants/addresses"
 import { DataLocationOnChain } from "@ethsign/sp-sdk"
 
-export function deconstructOwnerPinkSlipAttestationData(recipients: string[], vin: string, make: string, model: string, year: string, color: string, country: string, licensePlate: string, visualProof: string[], ownerProof: string, transferProof: string ) {
+export async function deconstructOwnerPinkSlipAttestationData(recipients: string[], vin: string, make: string, model: string, year: string, color: string, country: string, licensePlate: string, visualProof: string[], ownerProof: string, transferProof: string ) {
     const schemaData = {
         vin: vin,
         make: make,
@@ -19,7 +19,7 @@ export function deconstructOwnerPinkSlipAttestationData(recipients: string[], vi
     }
 
 
-    const deconstructedMemberBadgeAttestationData: Attestation= {
+    const deconstructedOwnerPinkSlipAttestationData: Attestation= {
         schemaId: (ownerPinkSlipSchemaID), // The final number from our schema's ID.
         indexingValue: "0",
         linkedAttestationId: null, // We are not linking an attestation.
@@ -32,5 +32,5 @@ export function deconstructOwnerPinkSlipAttestationData(recipients: string[], vi
         recipients: recipients, // Bob is our recipient.
         data: schemaData // The encoded schema data.
     }   
-    return deconstructedMemberBadgeAttestationData
+    return deconstructedOwnerPinkSlipAttestationData
 }

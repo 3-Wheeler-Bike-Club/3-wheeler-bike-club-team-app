@@ -17,37 +17,42 @@ import { Plus } from "lucide-react"
 import { motion } from "framer-motion"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
-import { Select, SelectContent, SelectValue, SelectTrigger, SelectGroup, SelectItem } from "@/components/ui/select"
 import { OwnerPinkSlipAttestation } from "@/hooks/attestation/useGetOwnerPinkSlipAttestationByInvoice"
+import { deconstructOwnerPinkSlipAttestationData } from "@/utils/attestation/owner/pinkSlip/deconstructOwnerPinkSlipAttestationData"
+import { attest } from "@/utils/attestation/attest"
+import { updateOwnerPinkSlipAttestationPostRegisterAction } from "@/app/actions/attestation/updateOwnerPinkSlipAttestationPostRegisterAction"
 
 
 
 
 interface FillProps {
-    ownerPinkSlipAttestation: OwnerPinkSlipAttestation
+    ownerPinkSlipAttestationByVin: OwnerPinkSlipAttestation
+    getBackOwnerPinkSlipAttestationByVin: () => void
 }
 
 const FormSchema = z.object({
     licensePlate: z.string(),
-    make: z.string(),
-    model: z.string(),
-    year: z.string(),
+    visualProofOne: z.string(),
+    visualProofTwo: z.string(),
+    visualProofThree: z.string(),
+    visualProofFour: z.string(),
+    ownerProof: z.string(),
+    
 })
   
 
-export function Fill({ ownerPinkSlipAttestation }: FillProps) {
-    console.log(ownerPinkSlipAttestation)
+export function Fill({ ownerPinkSlipAttestationByVin, getBackOwnerPinkSlipAttestationByVin }: FillProps) {
+    console.log(ownerPinkSlipAttestationByVin)
 
     const [loading, setLoading] = useState(false)
+    const [open, setOpen] = useState(false)
 
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       licensePlate: undefined,
-      make: undefined,
-      model: undefined,
-      year: undefined,
+      visualProofOne: undefined,
     },
   })
   
@@ -55,11 +60,13 @@ export function Fill({ ownerPinkSlipAttestation }: FillProps) {
     setLoading(true)
     try {
       const licensePlate = form.watch("licensePlate")
-      const make = form.watch("make")
-      const model = form.watch("model")
-      const year = form.watch("year")
+      const visualProofOne = form.watch("visualProofOne")
+      const visualProofTwo = form.watch("visualProofTwo")
+      const visualProofThree = form.watch("visualProofThree")
+      const visualProofFour = form.watch("visualProofFour")
+      const ownerProof = form.watch("ownerProof") 
 
-      if (!licensePlate || !make || !model || !year) {
+      if (!licensePlate || !visualProofOne || !visualProofTwo || !visualProofThree || !visualProofFour || !ownerProof) {
         return
       }
 /*
@@ -68,16 +75,59 @@ export function Fill({ ownerPinkSlipAttestation }: FillProps) {
         return
       }
 */     
+
+    const deconstructedOwnerPinkSlipAttestationData = await deconstructOwnerPinkSlipAttestationData(
+        [ownerPinkSlipAttestationByVin.address], 
+        ownerPinkSlipAttestationByVin.vin,
+        ownerPinkSlipAttestationByVin.make,
+        ownerPinkSlipAttestationByVin.model,
+        ownerPinkSlipAttestationByVin.year,
+        ownerPinkSlipAttestationByVin.color,
+        ownerPinkSlipAttestationByVin.country,
+        licensePlate,
+        [
+            visualProofOne,
+            visualProofTwo,
+            visualProofThree,
+            visualProofFour
+        ],
+        ownerProof,
+        "0xPending"
+    )
+    const ownerPinkSlipAttested = await attest(deconstructedOwnerPinkSlipAttestationData)
+
+    if (ownerPinkSlipAttested) {
+        // Post owner pink slip attestation offchain
+        await updateOwnerPinkSlipAttestationPostRegisterAction(
+            ownerPinkSlipAttested.attestationId,
+            ownerPinkSlipAttestationByVin.vin,
+            licensePlate,
+            [
+                visualProofOne,
+                visualProofTwo,
+                visualProofThree,
+                visualProofFour
+            ],
+            ownerProof,
+        )
+        //alert("Owner Pink Slip Attested")
+    } else {
+        //alert("Owner Pink Slip Not Attested")
+    }
       
       form.reset({
         licensePlate: "",
-        make: "",
-        model: "",
-        year: ""
+        visualProofOne: "",
+        visualProofTwo: "",
+        visualProofThree: "",
+        visualProofFour: "",
+        ownerProof: ""
       }, {
         keepDefaultValues: true
       })
+      getBackOwnerPinkSlipAttestationByVin()
       setLoading(false)
+      setOpen(false)
     } catch (error) {
       console.error(error)
       setLoading(false)
@@ -85,7 +135,7 @@ export function Fill({ ownerPinkSlipAttestation }: FillProps) {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
             <Plus className="h-4 w-4"/>
@@ -118,50 +168,70 @@ export function Fill({ ownerPinkSlipAttestation }: FillProps) {
                   />
                   <FormField
                       control={form.control}
-                      name="make"
+                      name="visualProofOne"
                       render={({ field }) => (
                           <FormItem>
                               <div className="flex w-full max-w-sm items-center space-x-2">
-                                  <FormLabel className="text-right">Visual Proof</FormLabel>
-                                  <Select onValueChange={field.onChange} defaultValue={field.value} {...field} >
-                                    <FormControl>
-                                    <SelectTrigger className='col-span-3'>
-                                        <SelectValue placeholder='Select make' />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent className='col-span-3'>
-                                        <SelectGroup>
-                                            <SelectItem value="TVS">
-                                                TVS
-                                            </SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                  </Select>
+                                  <FormLabel className="text-right">Visual Proof #1</FormLabel>
+                                  <FormControl >
+                                      <Input className="col-span-3" placeholder={"AS7854"} {...field} />
+                                  </FormControl>
                               </div>
                           </FormItem>
                       )}
                   />
                   <FormField
                       control={form.control}
-                      name="model"
+                      name="visualProofTwo"
+                      render={({ field }) => (
+                          <FormItem>
+                              <div className="flex w-full max-w-sm items-center space-x-2">
+                                  <FormLabel className="text-right">Visual Proof #2</FormLabel>
+                                  <FormControl >
+                                      <Input className="col-span-3" placeholder={"https://..."} {...field} />
+                                  </FormControl>
+                              </div>
+                          </FormItem>
+                      )}
+                  />
+                  <FormField
+                      control={form.control}
+                      name="visualProofThree"
+                      render={({ field }) => (
+                          <FormItem>
+                              <div className="flex w-full max-w-sm items-center space-x-2">
+                                  <FormLabel className="text-right">Visual Proof #3</FormLabel>
+                                  <FormControl >
+                                      <Input className="col-span-3" placeholder={"https://..."} {...field} />
+                                  </FormControl>
+                              </div>
+                          </FormItem>
+                      )}
+                  />
+                  <FormField
+                      control={form.control}
+                      name="visualProofFour"
+                      render={({ field }) => (
+                          <FormItem>
+                              <div className="flex w-full max-w-sm items-center space-x-2">
+                                  <FormLabel className="text-right">Visual Proof #4</FormLabel>
+                                  <FormControl >
+                                      <Input className="col-span-3" placeholder={"https://..."} {...field} />
+                                  </FormControl>
+                              </div>
+                          </FormItem>
+                      )}
+                  />
+                  <FormField
+                      control={form.control}
+                      name="ownerProof"
                       render={({ field }) => (
                           <FormItem>
                               <div className="flex w-full max-w-sm items-center space-x-2">
                                   <FormLabel className="text-right">Owner Proof</FormLabel>
-                                  <Select onValueChange={field.onChange} defaultValue={field.value} {...field} >
-                                    <FormControl>
-                                    <SelectTrigger className='col-span-3'>
-                                        <SelectValue placeholder='Select model' />
-                                    </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent className='col-span-3'>
-                                        <SelectGroup>
-                                            <SelectItem value="King Deluxe Plus">
-                                                King Deluxe Plus
-                                            </SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
+                                  <FormControl >
+                                      <Input className="col-span-3" placeholder={"https://..."} {...field} />
+                                  </FormControl>
                               </div>
                           </FormItem>
                       )}
