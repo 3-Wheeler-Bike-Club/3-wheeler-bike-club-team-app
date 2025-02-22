@@ -11,3 +11,11 @@ export const statusCodes = {
     3: "Hire Purchase Started",
     99: "Order Refunded"
 }
+
+export const memberBadgeAttestationStatusCodes = {
+    0: "New Member",
+    1: "Applied to Drive",
+    2: "Driver Assigned",
+    3: "Vehicle Owned",
+}
+

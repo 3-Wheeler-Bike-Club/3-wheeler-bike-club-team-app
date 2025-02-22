@@ -9,6 +9,8 @@ declare global {
             PRIVY_APP_SECRET: string
             PRIVATE_KEY: `0x${string}`
             ATTEST_PRIVATE_KEY: `0x${string}`
+            PRIVY_MEMBERS_APP_ID: string
+            PRIVY_MEMBERS_APP_SECRET: string
         }
     }
 }
