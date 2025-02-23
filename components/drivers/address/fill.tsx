@@ -66,7 +66,7 @@ export function Fill({ memberBadgeAttestation, getBackMemberBadgeAttestation }: 
     },
   })
   
-  async function onOrderFilling() {
+  async function onDriverFilling() {
     setLoading(true)
     try {
       const driverNationalID = form.watch("driverNationalID")
@@ -83,12 +83,7 @@ export function Fill({ memberBadgeAttestation, getBackMemberBadgeAttestation }: 
       if (!driverNationalID || !driverLicenseID || !driverHeadshot || !driverAddress || !driverPhone || !guarantorNationalID || !guarantorHeadshot || !guarantorAddress || !guarantorPhone) {
         return
       }
-/*
-      if (ownerPinkSlipAttestations?.vins?.includes(vin)) {
-        alert("This VIN has already been added")
-        return
-      }
-*/     
+
 
     const deconstructedMemberBadgeAttestationData = await deconstructMemberBadgeAttestationData(
         [memberBadgeAttestation.address], 
@@ -159,7 +154,7 @@ export function Fill({ memberBadgeAttestation, getBackMemberBadgeAttestation }: 
         </DialogHeader>
         <div className="flex flex-col p-4">
           <Form {...form}>
-              <form onSubmit={form.handleSubmit(onOrderFilling)} className="space-y-6">
+              <form onSubmit={form.handleSubmit(onDriverFilling)} className="space-y-6">
                   <FormField
                       control={form.control}
                       name="driverNationalID"
@@ -294,7 +289,7 @@ export function Fill({ memberBadgeAttestation, getBackMemberBadgeAttestation }: 
                 <Button
                     className="w-36"
                     //disabled={ownerPinkSlipAttestations?.vins?.length === order.amount}
-                    onClick={onOrderFilling}
+                    onClick={onDriverFilling}
                 >
                     {
                         loading

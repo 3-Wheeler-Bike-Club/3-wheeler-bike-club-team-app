@@ -4,6 +4,10 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fill } from "./fill";
 import { User } from "@privy-io/server-auth";
+import { useState } from "react";
+import { useGetOwnersPinkSlipAttestations } from "@/hooks/attestation/useGetOwnersPinkSlipAttestations";
+import { useEffect } from "react";
+import { OwnerPinkSlipAttestation } from "@/hooks/attestation/useGetOwnerPinkSlipAttestationByInvoice";
 
 interface AuthorizedProps {
     address: string
@@ -13,12 +17,20 @@ interface AuthorizedProps {
 export function Authorized({ address, driver }: AuthorizedProps) {
 
     const router = useRouter()
+    const privyUserMetadata = driver?.customMetadata
     
     const {memberBadgeAttestation, getBackMemberBadgeAttestation} = useGetMemberBadgeAttestation(address)
+    const {ownersPinkSlipAttestations} = useGetOwnersPinkSlipAttestations()
+    const [ownersPinkSlipAttestationsPendingAssignment, setOwnersPinkSlipAttestationsPendingAssignment] = useState<OwnerPinkSlipAttestation[]>([])
+
+    useEffect(() => {
+        if (ownersPinkSlipAttestations) {
+            const filtered = ownersPinkSlipAttestations.filter(ownersPinkSlipAttestation => ownersPinkSlipAttestation.licensePlate !== "0xDEAD" && ownersPinkSlipAttestation.hirePurchaseAttestationID === "0xDEAD")
+            setOwnersPinkSlipAttestationsPendingAssignment(filtered)
+        }
+    }, [ownersPinkSlipAttestations])
 
     
-
-    const privyUserMetadata = driver?.customMetadata
 
 
     return (
@@ -27,15 +39,15 @@ export function Authorized({ address, driver }: AuthorizedProps) {
                 <Menu/>
                 <div className="flex flex-col w-full justify-center items-center">
                     <div className="flex w-full max-w-[66rem] items-center">
-                        <ArrowLeft className="h-8 w-8" onClick={() =>  router.push("/drivers")}/>
+                        <ArrowLeft className="h-8 w-8" onClick={() =>  router.push("/assign")}/>
                     </div>
                 </div>
                 {
-                    memberBadgeAttestation?.status == 1 && memberBadgeAttestation?.national == false && memberBadgeAttestation?.driver == false && memberBadgeAttestation?.guarantor == false && (
+                    memberBadgeAttestation?.status == 1 || ownersPinkSlipAttestations && ownersPinkSlipAttestationsPendingAssignment.length > 0 && (
                         <>
                             <div className="flex flex-col w-full justify-center items-center">
                                 <div className="flex w-full max-w-[66rem] justify-end">
-                                    <Fill memberBadgeAttestation={memberBadgeAttestation} getBackMemberBadgeAttestation={getBackMemberBadgeAttestation} />
+                                    <Fill memberBadgeAttestation={memberBadgeAttestation!} ownerPinkSlipAttestation={ownersPinkSlipAttestationsPendingAssignment[0]} getBackMemberBadgeAttestation={getBackMemberBadgeAttestation} />
                                 </div>
                             </div>
                         </>

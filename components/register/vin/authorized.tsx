@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fill } from "./fill";
 import { useGetOwnerPinkSlipAttestationByVin } from "@/hooks/attestation/useGetOwnerPinkSlipAttestationByVin";
-
+import { useGetFleetOrder } from "@/hooks/offchain/useGetFleetOrder";
 interface AuthorizedProps {
     vin: string
 }
@@ -13,7 +13,7 @@ export function Authorized({ vin }: AuthorizedProps) {
     const router = useRouter()
     
     const {ownerPinkSlipAttestationByVin, getBackOwnerPinkSlipAttestationByVin} = useGetOwnerPinkSlipAttestationByVin(vin)
-
+    const {fleetOrder} = useGetFleetOrder(ownerPinkSlipAttestationByVin?.invoice)
 
     return (
         <main className="flex h-full w-full">
@@ -29,7 +29,7 @@ export function Authorized({ vin }: AuthorizedProps) {
                         <>
                             <div className="flex flex-col w-full justify-center items-center">
                                 <div className="flex w-full max-w-[66rem] justify-end">
-                                    <Fill ownerPinkSlipAttestationByVin={ownerPinkSlipAttestationByVin} getBackOwnerPinkSlipAttestationByVin={getBackOwnerPinkSlipAttestationByVin} />
+                                    <Fill ownerPinkSlipAttestationByVin={ownerPinkSlipAttestationByVin} fleetOrder={fleetOrder!} getBackOwnerPinkSlipAttestationByVin={getBackOwnerPinkSlipAttestationByVin} />
                                 </div>
                             </div>
                         </>

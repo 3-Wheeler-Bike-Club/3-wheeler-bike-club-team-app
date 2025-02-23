@@ -17,7 +17,7 @@ export function Authorized() {
 
     useEffect(() => {
         if (memberBadgeAttestations) {
-            const filtered = memberBadgeAttestations.filter(memberBadgeAttestation => memberBadgeAttestation.status === 1 && memberBadgeAttestation.driver == false && memberBadgeAttestation.guarantor == false && memberBadgeAttestation.national == false)
+            const filtered = memberBadgeAttestations.filter(memberBadgeAttestation => memberBadgeAttestation.status === 1 && memberBadgeAttestation.driver == true && memberBadgeAttestation.guarantor == true && memberBadgeAttestation.national == true)
             setMemberBadgeAttestationsWithCodeZero(filtered)
         }
     }, [memberBadgeAttestations])
@@ -29,9 +29,9 @@ export function Authorized() {
                 <div className="flex w-full justify-center">
                     <Alert className="w-full max-w-[66rem]">
                         <Caravan className="h-4 w-4" />
-                        <AlertTitle className="font-bold">Verify Drivers!</AlertTitle>
+                        <AlertTitle className="font-bold">Assign Drivers!</AlertTitle>
                         <AlertDescription className="text-xs italic">
-                            Manage Drivers, upload personal & guarantor documents.
+                            Assign 3-wheelers to Verfied & Approved Drivers after signing Hire Purchase Agreement.
                         </AlertDescription>
                     </Alert>
                 </div>

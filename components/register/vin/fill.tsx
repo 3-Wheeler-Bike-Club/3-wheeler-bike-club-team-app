@@ -21,12 +21,14 @@ import { OwnerPinkSlipAttestation } from "@/hooks/attestation/useGetOwnerPinkSli
 import { deconstructOwnerPinkSlipAttestationData } from "@/utils/attestation/owner/pinkSlip/deconstructOwnerPinkSlipAttestationData"
 import { attest } from "@/utils/attestation/attest"
 import { updateOwnerPinkSlipAttestationPostRegisterAction } from "@/app/actions/attestation/updateOwnerPinkSlipAttestationPostRegisterAction"
-
+import { postFleetOrderAction } from "@/app/actions/offchain/postFleetOrderAction"
+import { OffchainFleetOrder } from "@/hooks/offchain/useGetFleetOrder"
 
 
 
 interface FillProps {
     ownerPinkSlipAttestationByVin: OwnerPinkSlipAttestation
+    fleetOrder: OffchainFleetOrder
     getBackOwnerPinkSlipAttestationByVin: () => void
 }
 
@@ -41,7 +43,7 @@ const FormSchema = z.object({
 })
   
 
-export function Fill({ ownerPinkSlipAttestationByVin, getBackOwnerPinkSlipAttestationByVin }: FillProps) {
+export function Fill({ ownerPinkSlipAttestationByVin, fleetOrder, getBackOwnerPinkSlipAttestationByVin }: FillProps) {
     console.log(ownerPinkSlipAttestationByVin)
 
     const [loading, setLoading] = useState(false)
@@ -69,12 +71,7 @@ export function Fill({ ownerPinkSlipAttestationByVin, getBackOwnerPinkSlipAttest
       if (!licensePlate || !visualProofOne || !visualProofTwo || !visualProofThree || !visualProofFour || !ownerProof) {
         return
       }
-/*
-      if (ownerPinkSlipAttestations?.vins?.includes(vin)) {
-        alert("This VIN has already been added")
-        return
-      }
-*/     
+ 
 
     const deconstructedOwnerPinkSlipAttestationData = await deconstructOwnerPinkSlipAttestationData(
         [ownerPinkSlipAttestationByVin.address], 
@@ -110,6 +107,36 @@ export function Fill({ ownerPinkSlipAttestationByVin, getBackOwnerPinkSlipAttest
             ],
             ownerProof,
         )
+        //update fleet order status to 2
+        //const ownerPinkSlipAttestationIDs: string[] = []
+        if (fleetOrder.amount > 1) {
+            //check if the ownerPinkSlipAttestationIDs is array of "0xDead"
+            if (fleetOrder.ownerPinkSlipAttestationID.includes("0xDEAD")) {
+                postFleetOrderAction(
+                    undefined,
+                    ownerPinkSlipAttestationByVin.invoice,
+                    undefined,
+                    undefined,
+                    undefined,
+                    2,
+                    [ownerPinkSlipAttested.attestationId]
+                )
+            } else {
+                const ownerPinkSlipAttestationIDs = fleetOrder.ownerPinkSlipAttestationID
+                ownerPinkSlipAttestationIDs.push(ownerPinkSlipAttested.attestationId)
+            }
+
+        } else {
+            postFleetOrderAction(
+                undefined,
+                ownerPinkSlipAttestationByVin.invoice,
+                undefined,
+                undefined,
+                undefined,
+                2,
+                [ownerPinkSlipAttested.attestationId]
+            )
+        }
         //alert("Owner Pink Slip Attested")
     } else {
         //alert("Owner Pink Slip Not Attested")
@@ -125,6 +152,7 @@ export function Fill({ ownerPinkSlipAttestationByVin, getBackOwnerPinkSlipAttest
       }, {
         keepDefaultValues: true
       })
+      
       getBackOwnerPinkSlipAttestationByVin()
       setLoading(false)
       setOpen(false)

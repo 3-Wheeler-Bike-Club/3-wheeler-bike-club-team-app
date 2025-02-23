@@ -113,6 +113,20 @@ export function Menu() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
 
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      onClick={()=>{
+                        router.push("/assign")
+                      }}
+                      asChild
+                    >
+                      <div className="flex items-center gap-2">
+                        <Caravan size={18} color="gold"/>
+                        <span className="text-base font-semibold">Assign</span>
+                      </div>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
 
                 </SidebarMenu>
               </SidebarGroupContent>
