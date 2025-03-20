@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Menu } from "../topnav/menu";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
-import { Scroll } from "lucide-react";
+import { OctagonX, Scroll } from "lucide-react";
 import { DataTable } from "../register/dataTable";
 import { Columns } from "../register/columns";
 import { OwnerPinkSlipAttestation } from "@/hooks/attestation/useGetOwnerPinkSlipAttestationByInvoice";
@@ -11,7 +11,7 @@ import { useGetOwnersPinkSlipAttestations } from "@/hooks/attestation/useGetOwne
 export function Authorized() {
 
     const {ownersPinkSlipAttestations} = useGetOwnersPinkSlipAttestations()
-    const [ownersPinkSlipAttestationsPendingRegistration, setOwnersPinkSlipAttestationsPendingRegistration] = useState<OwnerPinkSlipAttestation[]>([])
+    const [ownersPinkSlipAttestationsPendingRegistration, setOwnersPinkSlipAttestationsPendingRegistration] = useState<OwnerPinkSlipAttestation[]| null>(null)
 
     useEffect(() => {
         if (ownersPinkSlipAttestations) {
@@ -35,6 +35,21 @@ export function Authorized() {
                 </div>
 
                 <div className="flex flex-col h-full p-4 md:p-6 lg:p-8 w-full gap-6 items-center">
+                {
+                    !ownersPinkSlipAttestationsPendingRegistration && (
+                        <div className="flex flex-col w-full gap-3 items-center">
+                            <p className="font-bold">Loading...</p>
+                        </div>
+                    )
+                }
+                {
+                    ownersPinkSlipAttestationsPendingRegistration && ownersPinkSlipAttestationsPendingRegistration?.length === 0 && (
+                        <div className="flex flex-col w-full gap-3 items-center">
+                            <OctagonX className="h-36 w-36" />
+                            <p className="font-bold">No Unregistered 3-Wheelers found</p>
+                        </div>
+                    )
+                }
                 {
                     ownersPinkSlipAttestationsPendingRegistration && ownersPinkSlipAttestationsPendingRegistration?.length >= 1 && (
                         <div className="flex flex-col w-full max-w-[66rem] gap-3">

@@ -7,7 +7,7 @@ export async function getUsersFromPrivy() {
     try {
         const privy = new PrivyClient(process.env.PRIVY_MEMBERS_APP_ID!, process.env.PRIVY_MEMBERS_APP_SECRET!);
         const users = await privy.getUsers();
-        //console.log(users)
+        console.log(users)
         return users
     } catch (error) {
         console.log(error)

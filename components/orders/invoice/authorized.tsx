@@ -2,7 +2,7 @@ import { Menu } from "../../topnav/menu";
 import { ArrowLeft, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { OffchainFleetOrder } from "@/hooks/offchain/useGetFleetOrders";
-import { statusCodes } from "@/utils/misc";
+import { statusCodes } from "@/utils/constants/misc";
 import { Refund } from "./refund";
 import { Fill } from "./fill";
 import { useState } from "react";

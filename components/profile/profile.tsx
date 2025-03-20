@@ -87,7 +87,7 @@ export function Profile () {
             console.log(member)
             
             if (member?.customMetadata) {
-                window.location.href = "/dashboard"
+                window.location.href = "/orders"
             }
             
             setLoading(false)

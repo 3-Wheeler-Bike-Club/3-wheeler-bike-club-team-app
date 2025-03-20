@@ -15,20 +15,41 @@ export interface OwnerPinkSlipAttestation {
     color: string;
     country: string;
     licensePlate: string;
-    visualProof: string;
+    visualProof: string[];
     ownerProof: string;
     transferProof: string;
 }
 
-export const useGetOwnerPinkSlipAttestationByVin = (vin: string) => {
+export const useGetOwnerPinkSlipAttestationByVin = (vin: string | undefined) => {
     const [ownerPinkSlipAttestationByVin, setOwnerPinkSlipAttestationByVin] = useState<OwnerPinkSlipAttestation | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<any | null>(null)
 
 
     useEffect (() =>{
-        async function getOwnerPinkSlipAttestationByInvoice() {
+        async function getOwnerPinkSlipAttestationByVin() {
            
+            if(vin){
+                setLoading(true);
+                try {
+                    
+                    const data = await getOwnerPinkSlipAttestationByVinAction(vin)
+                    setOwnerPinkSlipAttestationByVin(data)
+
+                } catch(err){
+                    setError(err)
+                }
+                setLoading(false)
+            }
+        
+        }
+        getOwnerPinkSlipAttestationByVin()
+    },[vin])
+
+
+    async function getBackOwnerPinkSlipAttestationByVin() {
+        
+        if(vin){
             setLoading(true);
             try {
                 
@@ -39,24 +60,7 @@ export const useGetOwnerPinkSlipAttestationByVin = (vin: string) => {
                 setError(err)
             }
             setLoading(false)
-        
         }
-        getOwnerPinkSlipAttestationByInvoice()
-    },[])
-
-
-    async function getBackOwnerPinkSlipAttestationByVin() {
-        
-        setLoading(true);
-        try {
-            
-            const data = await getOwnerPinkSlipAttestationByVinAction(vin)
-            setOwnerPinkSlipAttestationByVin(data)
-        } catch(err){
-            setError(err)
-        }
-
-        setLoading(false)
         
     }
 

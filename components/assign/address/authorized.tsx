@@ -42,17 +42,12 @@ export function Authorized({ address, driver }: AuthorizedProps) {
                         <ArrowLeft className="h-8 w-8" onClick={() =>  router.push("/assign")}/>
                     </div>
                 </div>
-                {
-                    memberBadgeAttestation?.status == 1 || ownersPinkSlipAttestations && ownersPinkSlipAttestationsPendingAssignment.length > 0 && (
-                        <>
-                            <div className="flex flex-col w-full justify-center items-center">
-                                <div className="flex w-full max-w-[66rem] justify-end">
-                                    <Fill memberBadgeAttestation={memberBadgeAttestation!} ownerPinkSlipAttestation={ownersPinkSlipAttestationsPendingAssignment[0]} getBackMemberBadgeAttestation={getBackMemberBadgeAttestation} />
-                                </div>
-                            </div>
-                        </>
-                    ) 
-                }    
+                <div className="flex flex-col w-full justify-center items-center">
+                    <div className="flex w-full max-w-[66rem] justify-end">
+                        <Fill memberBadgeAttestation={memberBadgeAttestation!} ownerPinkSlipAttestation={ownersPinkSlipAttestationsPendingAssignment[0]} getBackMemberBadgeAttestation={getBackMemberBadgeAttestation} />
+                        
+                    </div>
+                </div>  
                 {privyUserMetadata && (
                     <div className="flex flex-col w-full justify-center items-center mt-4">
                         <div className="flex flex-col w-full max-w-[66rem] p-6 bg-white rounded-lg shadow-sm">
@@ -82,23 +77,23 @@ export function Authorized({ address, driver }: AuthorizedProps) {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Driver National ID</span>
-                                        <span className="text-base">{memberBadgeAttestation.driverNationalID}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.driverNationalID}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Driver License ID</span>
-                                        <span className="text-base">{memberBadgeAttestation.driverLicenseID}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.driverLicenseID}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Driver Headshot</span>
-                                        <span className="text-base">{memberBadgeAttestation.driverHeadshot}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.driverHeadshot}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Driver Address</span>
-                                        <span className="text-base">{memberBadgeAttestation.driverAddress}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.driverAddress}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Driver Phone</span>
-                                        <span className="text-base">{memberBadgeAttestation.driverPhone}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.driverPhone}</span>
                                     </div>
                                 </div>
 
@@ -106,19 +101,19 @@ export function Authorized({ address, driver }: AuthorizedProps) {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Guarantor National ID</span>
-                                        <span className="text-base">{memberBadgeAttestation.guarantorNationalID}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.guarantorNationalID}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Guarantor Headshot</span>
-                                        <span className="text-base">{memberBadgeAttestation.guarantorHeadshot}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.guarantorHeadshot}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Guarantor Address</span>
-                                        <span className="text-base">{memberBadgeAttestation.guarantorAddress}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.guarantorAddress}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm text-gray-500">Guarantor Phone</span>
-                                        <span className="text-base">{memberBadgeAttestation.guarantorPhone}</span>
+                                        <span className="text-base break-words">{memberBadgeAttestation.guarantorPhone}</span>
                                     </div>
                                 </div>
                             </div>

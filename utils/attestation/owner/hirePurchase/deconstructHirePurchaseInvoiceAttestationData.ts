@@ -1,14 +1,14 @@
 import { Attestation } from "@ethsign/sp-sdk"
 
 import { attester, hirePurchaseInvoiceSchemaID } from "@/utils/constants/addresses"
-import { ownerPinkSlipSchemaID } from "@/utils/constants/addresses"
 import { DataLocationOnChain } from "@ethsign/sp-sdk"
 
-export function deconstructHirePurchaseInvoiceAttestationData(recipients: string[], vin: string, invoiceID: string, amount: number, linkedAttestationId: string ) {
+export function deconstructHirePurchaseInvoiceAttestationData(recipients: string[], vin: string, invoiceID: string, amount: number, due: Date, linkedAttestationId: string ) {
     const schemaData = {
         vin: vin,
         invoiceID: invoiceID,
         amount: amount,
+        due: due
     }
 
 

@@ -12,7 +12,7 @@ export function Wrapper() {
 
     useEffect(() => {
         if (ready && authenticated && user?.customMetadata) {
-            router.replace("/profile")
+            router.replace("/orders")
         }
     }, [ready, authenticated, router, user?.customMetadata])
     

@@ -11,7 +11,7 @@ export async function POST(
         return authResponse;
     }
     
-    const {  hirePurchaseAttestationID, vin, } = await req.json();
+    const {  vin, hirePurchaseAttestationID, ownerPinkSlipAttestationID } = await req.json();
     
     try {
         await connectDB();
@@ -21,6 +21,7 @@ export async function POST(
             { vin: vin },
             { 
                 hirePurchaseAttestationID: hirePurchaseAttestationID,
+                ownerPinkSlipAttestationID: ownerPinkSlipAttestationID,
             },
             { new: true }
         );

@@ -3,6 +3,7 @@
 export const updateOwnerPinkSlipAttestationPostHirePurchaseAction = async ( 
     vin: string, 
     hirePurchaseAttestationID: string, 
+    ownerPinkSlipAttestationID: string
 ) => {
     try {
         const res = await fetch(`${process.env.BASE_URL}/api/updateOwnerPinkSlipAttestationPostHirePurchase`, {
@@ -12,8 +13,9 @@ export const updateOwnerPinkSlipAttestationPostHirePurchaseAction = async (
                 "x-api-key": `${process.env.WHEELER_API_KEY}`
             },
             body: JSON.stringify({
-                hirePurchaseAttestationID: hirePurchaseAttestationID!,
                 vin: vin!,
+                hirePurchaseAttestationID: hirePurchaseAttestationID!,
+                ownerPinkSlipAttestationID: ownerPinkSlipAttestationID!,
             })
         }) 
    

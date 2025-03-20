@@ -19,6 +19,7 @@ export function Authorized({ address, driver }: AuthorizedProps) {
     
 
     const privyUserMetadata = driver?.customMetadata
+    console.log(privyUserMetadata)
 
 
     return (

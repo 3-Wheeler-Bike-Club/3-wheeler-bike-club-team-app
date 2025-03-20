@@ -75,6 +75,7 @@ export function Fill({ ownerPinkSlipAttestationByVin, fleetOrder, getBackOwnerPi
 
     const deconstructedOwnerPinkSlipAttestationData = await deconstructOwnerPinkSlipAttestationData(
         [ownerPinkSlipAttestationByVin.address], 
+        null,
         ownerPinkSlipAttestationByVin.vin,
         ownerPinkSlipAttestationByVin.make,
         ownerPinkSlipAttestationByVin.model,
@@ -108,7 +109,7 @@ export function Fill({ ownerPinkSlipAttestationByVin, fleetOrder, getBackOwnerPi
             ownerProof,
         )
         //update fleet order status to 2
-        //const ownerPinkSlipAttestationIDs: string[] = []
+        const ownerPinkSlipAttestationIDs: string[] = []
         if (fleetOrder.amount > 1) {
             //check if the ownerPinkSlipAttestationIDs is array of "0xDead"
             if (fleetOrder.ownerPinkSlipAttestationID.includes("0xDEAD")) {
@@ -122,8 +123,19 @@ export function Fill({ ownerPinkSlipAttestationByVin, fleetOrder, getBackOwnerPi
                     [ownerPinkSlipAttested.attestationId]
                 )
             } else {
-                const ownerPinkSlipAttestationIDs = fleetOrder.ownerPinkSlipAttestationID
+                for (let i = 0; i < fleetOrder.ownerPinkSlipAttestationID.length; i++) {
+                    ownerPinkSlipAttestationIDs.push(fleetOrder.ownerPinkSlipAttestationID[i])
+                }
                 ownerPinkSlipAttestationIDs.push(ownerPinkSlipAttested.attestationId)
+                postFleetOrderAction(
+                    undefined,
+                    ownerPinkSlipAttestationByVin.invoice,
+                    undefined,
+                    undefined,
+                    undefined,
+                    2,
+                    ownerPinkSlipAttestationIDs
+                )
             }
 
         } else {

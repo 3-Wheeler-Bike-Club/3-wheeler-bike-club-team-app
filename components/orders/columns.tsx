@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { OffchainFleetOrder } from "@/hooks/offchain/useGetFleetOrders";
-import { statusCodes } from "@/utils/misc";
+import { statusCodes } from "@/utils/constants/misc";
 import {
     DropdownMenu,
     DropdownMenuContent,

@@ -1,5 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { memberBadgeAttestationStatusCodes } from "@/utils/misc";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -29,11 +28,19 @@ export const Columns: ColumnDef<MemberBadgeAttestation>[] = [
         header: "Country",
     },
     {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "driver",
+        header: "Driver",
         cell: ({row}) => {
-            const statusCode = (row.getValue("status"))
-            return <div>{memberBadgeAttestationStatusCodes[statusCode as keyof typeof memberBadgeAttestationStatusCodes]}</div>
+            const driver = (row.getValue("driver"))
+            return <div>{driver ? "Verified" : "Not Verified"}</div>
+        },
+    },
+    {
+        accessorKey: "guarantor",
+        header: "Guarantor",
+        cell: ({row}) => {
+            const guarantor = (row.getValue("guarantor"))
+            return <div>{guarantor ? "Verified" : "Not Verified"}</div>
         },
     },
     {

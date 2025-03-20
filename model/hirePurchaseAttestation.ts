@@ -27,11 +27,11 @@ const HirePurchaseAttestationSchema = new mongoose.Schema(
             required: true,
         },
         firstDate: {
-            type: Number,
+            type: Date,
             required: true,
         },
         lastDate: {
-            type: Number,
+            type: Date,
             required: true,
         },
         contract: {

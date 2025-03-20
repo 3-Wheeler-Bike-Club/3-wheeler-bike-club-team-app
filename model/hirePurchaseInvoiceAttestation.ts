@@ -26,6 +26,10 @@ const HirePurchaseInvoiceAttestationSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        due: {
+            type: Date,
+            required: true,
+        },
     },
     {
         timestamps: true, // Add timestamps

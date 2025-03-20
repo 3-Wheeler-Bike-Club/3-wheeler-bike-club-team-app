@@ -7,7 +7,11 @@ const MemberCreditScoreAttestationSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
-        memberCreditScoreAttestationID: {
+        hirePurchaseAttestationID: {
+            type: String,
+            required: true,
+        },
+        hirePurchaseCreditScoreAttestationID: {
             type: String,
             required: true,
         },

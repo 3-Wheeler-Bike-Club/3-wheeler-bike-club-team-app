@@ -27,7 +27,7 @@ const FleetOrderSchema = new mongoose.Schema({
     },
     status: {
         type: Number,
-        enum: [0, 1, 2, 3, 99],
+        enum: [0, 1, 2, 99],
         default: 0,
         required: true,
     },

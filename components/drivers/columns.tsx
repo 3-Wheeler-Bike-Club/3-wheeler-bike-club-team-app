@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { memberBadgeAttestationStatusCodes } from "@/utils/misc";
+import { memberBadgeAttestationStatusCodes } from "@/utils/constants/misc";
 import {
     DropdownMenu,
     DropdownMenuContent,

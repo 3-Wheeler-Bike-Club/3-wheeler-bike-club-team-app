@@ -1,6 +1,6 @@
 import { Menu } from "../topnav/menu";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Caravan } from "lucide-react";
+import { BadgeAlert, Caravan } from "lucide-react";
 import { OffchainFleetOrder, useGetFleetOrders } from "@/hooks/offchain/useGetFleetOrders";
 import { DataTable } from "./dataTable";
 import { Columns } from "./columns";
@@ -11,7 +11,7 @@ import { useState } from "react";
 export function Authorized() {
 
     const {fleetOrders} = useGetFleetOrders()
-    const [fleetOrdersWithCodeZero, setFleetOrdersWithCodeZero] = useState<OffchainFleetOrder[]>([])
+    const [fleetOrdersWithCodeZero, setFleetOrdersWithCodeZero] = useState<OffchainFleetOrder[] | null>(null)
 
     useEffect(() => {
         if (fleetOrders) {
@@ -38,6 +38,21 @@ export function Authorized() {
 
 
                 <div className="flex flex-col h-full p-4 md:p-6 lg:p-8 w-full gap-6 items-center">
+                {
+                    fleetOrdersWithCodeZero == null && (
+                        <div className="flex flex-col w-full gap-3 items-center">
+                            <p className="font-bold">Loading...</p>
+                        </div>
+                    )
+                }
+                {
+                    fleetOrdersWithCodeZero && fleetOrdersWithCodeZero?.length === 0 && (
+                        <div className="flex flex-col w-full gap-3 items-center">
+                                <BadgeAlert className="h-36 w-36" />
+                                <p className="font-bold">No orders found</p>
+                        </div>
+                    )
+                }
                 {
                     fleetOrdersWithCodeZero && fleetOrdersWithCodeZero?.length >= 1 && (
                         <div className="flex flex-col w-full max-w-[66rem] gap-3">
