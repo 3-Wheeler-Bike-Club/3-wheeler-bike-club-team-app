@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import MemberCreditScoreAttestation from "@/model/memberCreditScoreAttestation";
+import HirePurchaseCreditScoreAttestation from "@/model/hirePurchaseCreditScoreAttestation";
 import connectDB from "@/utils/db/mongodb";
 import { middleware } from "@/utils/middleware";
 
@@ -13,21 +13,23 @@ export  async function POST(
         return authResponse;
     }
     
-    const { address, hirePurchaseAttestationID, hirePurchaseCreditScoreAttestationID, score, paidWeeks } = await req.json()
+    const { address, hirePurchaseAttestationID, hirePurchaseCreditScoreAttestationID, score, paidWeeks, invoicedWeeks } = await req.json()
 
     try {
         await connectDB()
-        const memberCreditScoreAttestation = await MemberCreditScoreAttestation.findOneAndUpdate({ 
+        const hirePurchaseCreditScoreAttestation = await HirePurchaseCreditScoreAttestation.findOneAndUpdate({ 
             address: address, 
         }, {
             hirePurchaseAttestationID: hirePurchaseAttestationID,
             hirePurchaseCreditScoreAttestationID: hirePurchaseCreditScoreAttestationID,
             score: score,
-            paidWeeks: paidWeeks
+            paidWeeks: paidWeeks,
+            invoicedWeeks: invoicedWeeks
         }, {
-            new: true
+            new: true,
+            upsert: true // This will create a new document if none exists
         })
-        return new Response(JSON.stringify(memberCreditScoreAttestation))
+        return new Response(JSON.stringify(hirePurchaseCreditScoreAttestation))
     } catch (error) {
         return new Response(JSON.stringify(error))
     }

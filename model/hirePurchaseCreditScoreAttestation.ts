@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const MemberCreditScoreAttestationSchema = new mongoose.Schema(
+const HirePurchaseCreditScoreAttestationSchema = new mongoose.Schema(
     {
         address: {
             type: String,
@@ -33,6 +33,6 @@ const MemberCreditScoreAttestationSchema = new mongoose.Schema(
     }
 )   
 
-const MemberCreditScoreAttestation = mongoose.models.MemberCreditScoreAttestation || mongoose.model("MemberCreditScoreAttestation", MemberCreditScoreAttestationSchema)
+const HirePurchaseCreditScoreAttestation = mongoose.models.HirePurchaseCreditScoreAttestation || mongoose.model("HirePurchaseCreditScoreAttestation", HirePurchaseCreditScoreAttestationSchema)
 
-export default MemberCreditScoreAttestation
+export default HirePurchaseCreditScoreAttestation

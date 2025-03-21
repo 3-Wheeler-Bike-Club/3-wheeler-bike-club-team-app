@@ -13,13 +13,14 @@ export  async function POST(
         return authResponse;
     }
     
-    const { address, hirePurchaseInvoiceAttestationID, vin, receiptID, amount, currency, score } = await req.json()
+    const { address, hirePurchaseInvoiceAttestationID, hirePurchaseReceiptAttestationID, vin, receiptID, amount, currency, score } = await req.json()
 
     try {
         await connectDB()
         const hirePurchaseReceiptAttestation = await HirePurchaseReceiptAttestation.create({ 
             address: address, 
             hirePurchaseInvoiceAttestationID: hirePurchaseInvoiceAttestationID,
+            hirePurchaseReceiptAttestationID: hirePurchaseReceiptAttestationID,
             vin: vin,
             receiptID: receiptID,
             amount: amount,
