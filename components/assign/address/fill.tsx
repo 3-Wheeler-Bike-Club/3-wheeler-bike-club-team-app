@@ -28,6 +28,7 @@ import { useGetOwnerPinkSlipAttestationByVin } from "@/hooks/attestation/useGetO
 
 
 interface FillProps {
+    address: string
     memberBadgeAttestation: MemberBadgeAttestation
     ownerPinkSlipAttestation: OwnerPinkSlipAttestation
     getBackMemberBadgeAttestation: () => void
@@ -39,17 +40,17 @@ const FormSchema = z.object({
 })
   
 
-export function Fill({ memberBadgeAttestation, ownerPinkSlipAttestation, getBackMemberBadgeAttestation }: FillProps) {
+export function Fill({ address, memberBadgeAttestation, ownerPinkSlipAttestation, getBackMemberBadgeAttestation }: FillProps) {
     console.log(memberBadgeAttestation)
 
     const [loading, setLoading] = useState(false)
     const [weeklyDates, setWeeklyDates] = useState<Date[]>([])
     console.log(weeklyDates)
 
-    const {hirePurchaseAttestation} = useGetHirePurchaseAttestation(memberBadgeAttestation.address)
+    const {hirePurchaseAttestation} = useGetHirePurchaseAttestation(address)
     console.log(hirePurchaseAttestation)
 
-    const {hirePurchaseInvoiceAttestations, getBackHirePurchaseInvoiceAttestations} = useGetHirePurchaseInvoiceAttestations(memberBadgeAttestation.address)
+    const {hirePurchaseInvoiceAttestations, getBackHirePurchaseInvoiceAttestations} = useGetHirePurchaseInvoiceAttestations(address)
     console.log(hirePurchaseInvoiceAttestations)
 
     const {ownerPinkSlipAttestationByVin} = useGetOwnerPinkSlipAttestationByVin(hirePurchaseAttestation?.vin)

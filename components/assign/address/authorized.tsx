@@ -9,6 +9,7 @@ import { useGetOwnersPinkSlipAttestations } from "@/hooks/attestation/useGetOwne
 import { useEffect } from "react";
 import { OwnerPinkSlipAttestation } from "@/hooks/attestation/useGetOwnerPinkSlipAttestationByInvoice";
 
+
 interface AuthorizedProps {
     address: string
     driver: User
@@ -20,6 +21,7 @@ export function Authorized({ address, driver }: AuthorizedProps) {
     const privyUserMetadata = driver?.customMetadata
     
     const {memberBadgeAttestation, getBackMemberBadgeAttestation} = useGetMemberBadgeAttestation(address)
+    console.log(memberBadgeAttestation)
     const {ownersPinkSlipAttestations} = useGetOwnersPinkSlipAttestations()
     const [ownersPinkSlipAttestationsPendingAssignment, setOwnersPinkSlipAttestationsPendingAssignment] = useState<OwnerPinkSlipAttestation[]>([])
 
@@ -44,7 +46,7 @@ export function Authorized({ address, driver }: AuthorizedProps) {
                 </div>
                 <div className="flex flex-col w-full justify-center items-center">
                     <div className="flex w-full max-w-[66rem] justify-end">
-                        <Fill memberBadgeAttestation={memberBadgeAttestation!} ownerPinkSlipAttestation={ownersPinkSlipAttestationsPendingAssignment[0]} getBackMemberBadgeAttestation={getBackMemberBadgeAttestation} />
+                        <Fill address={address} memberBadgeAttestation={memberBadgeAttestation!} ownerPinkSlipAttestation={ownersPinkSlipAttestationsPendingAssignment[0]} getBackMemberBadgeAttestation={getBackMemberBadgeAttestation}/>
                         
                     </div>
                 </div>  
