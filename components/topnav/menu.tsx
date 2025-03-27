@@ -1,10 +1,13 @@
 import { Bell } from "lucide-react";
-import { SidebarTrigger } from "../ui/sidebar";
 
 import { usePrivy } from "@privy-io/react-auth";
+import { useSidebar } from "@/providers/SidebarContext";
+import { SidebarTrigger } from "../ui/sidebar";
+
 export function Menu() {
 
     const { user } = usePrivy()
+    const { sidebarOpen, setSidebarOpen } = useSidebar()
 
     const smartWallet = user?.linkedAccounts.find((account) => account.type === 'smart_wallet');
     console.log(smartWallet?.address);
@@ -15,7 +18,7 @@ export function Menu() {
     return (
         <>
             <div className="flex shrink-0">
-                <SidebarTrigger/>
+                <SidebarTrigger onClick={() => setSidebarOpen(!sidebarOpen)}/>
             </div>
 
             <div className="flex justify-between w-full shrink-0">

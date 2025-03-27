@@ -8,9 +8,8 @@ import { config } from "@/utils/config";
 import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { WagmiContext } from "@/providers/WagmiContext";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { Menu } from "@/components/sidebar/menu";
-
+import { SidebarContext } from "@/providers/SidebarContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -46,10 +45,10 @@ export default function RootLayout({
       >
         <WagmiContext initialState={initialState!}>
           <PrivyContext>
-            <SidebarProvider defaultOpen={false}>
+            <SidebarContext>
                 <Menu />
                 {children}
-            </SidebarProvider>
+            </SidebarContext>
           </PrivyContext>
         </WagmiContext>
       </body>
