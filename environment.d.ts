@@ -12,11 +12,11 @@ declare global {
             PRIVY_MEMBERS_APP_ID: string
             PRIVY_MEMBERS_APP_SECRET: string
             ATTESTER: `0x${string}`
-            OWNER_PINK_SLIP_SCHEMA_ID: `0x${string}`
-            HIRE_PURCHASE_SCHEMA_ID: `0x${string}`
-            HIRE_PURCHASE_INVOICE_SCHEMA_ID: `0x${string}`
-            MEMBER_BADGE_SCHEMA_ID: `0x${string}`
-            HIRE_PURCHASE_CREDIT_SCORE_SCHEMA_ID: `0x${string}`
+            NEXT_PUBLIC_OWNER_PINK_SLIP_SCHEMA_ID: `0x${string}`
+            NEXT_PUBLIC_HIRE_PURCHASE_SCHEMA_ID: `0x${string}`
+            NEXT_PUBLIC_HIRE_PURCHASE_INVOICE_SCHEMA_ID: `0x${string}`
+            NEXT_PUBLIC_MEMBER_BADGE_SCHEMA_ID: `0x${string}`
+            NEXT_PUBLIC_HIRE_PURCHASE_CREDIT_SCORE_SCHEMA_ID: `0x${string}`
         }
     }
 }
