@@ -293,6 +293,16 @@ export function Fill({ address, memberBadgeAttestation, ownerPinkSlipAttestation
                                     </FormItem>
                                 )}
                             />
+                            {weeklyDates.length > 0 && (
+                                <div>
+                                    <div>{weeklyDates[0].toLocaleString('en-US', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}</div>
+                                </div>
+                            )}
                         </div>
                     </form>
                 </Form>
