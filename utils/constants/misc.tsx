@@ -5,7 +5,7 @@ export const installments = 93
 
 export const price3WheelerUSD = 3000;
 
-export const weeklyInstallment = 66
+export const weeklyInstallment = 63
 
 
 export const statusCodes = {
