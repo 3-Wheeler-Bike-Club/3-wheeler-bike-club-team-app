@@ -14,7 +14,8 @@ export async function revoke(attestationID: string) {
   
         const client = new SignProtocolClient(SpMode.OnChain, {
             chain: EvmChains.celo,
-            account: privateKeyToAccount(privateKey) // required in backend environments
+            account: privateKeyToAccount(privateKey), // required in backend environments
+            rpcUrl: "https://celo-mainnet.g.alchemy.com/v2/QiwvBj-G2HHG8XvZHzCtuqV5VcSMf4Q7"
         });
 
         const data = client.revokeAttestation(attestationID, {reason: "receipt updated"})
