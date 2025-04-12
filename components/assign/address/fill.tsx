@@ -17,7 +17,7 @@ import { deconstructHirePurchaseAttestationData } from "@/utils/attestation/owne
 import { installments } from "@/utils/constants/misc"
 import { weeklyInstallment } from "@/utils/constants/misc"
 import { postHirePurchaseAttestationAction } from "@/app/actions/attestation/postHirePurchaseAttestationAction"
-//import { revoke } from "@/utils/attestation/revoke"
+import { revoke } from "@/utils/attestation/revoke"
 import { deconstructOwnerPinkSlipAttestationData } from "@/utils/attestation/owner/pinkSlip/deconstructOwnerPinkSlipAttestationData"
 import { updateOwnerPinkSlipAttestationPostHirePurchaseAction } from "@/app/actions/attestation/updateOwnerPinkSlipAttestationPostHirePurchaseAction"
 import { deconstructHirePurchaseInvoiceAttestationData } from "@/utils/attestation/owner/hirePurchase/deconstructHirePurchaseInvoiceAttestationData"
@@ -165,7 +165,7 @@ export function Fill({ address, memberBadgeAttestation, ownerPinkSlipAttestation
                 ownerPinkSlipAttestation.transferProof
             )
             //reoke and reattest pink slip attestation
-            const revokedOwnerPinkSlipAttestationData = true//await revoke(ownerPinkSlipAttestation.ownerPinkSlipAttestationID)
+            const revokedOwnerPinkSlipAttestationData = await revoke(ownerPinkSlipAttestation.ownerPinkSlipAttestationID)
             if (revokedOwnerPinkSlipAttestationData) {
                 const reAttestedOwnerPinkSlipAttestationData = await attest(deconstructedOwnerPinkSlipAttestationData)
                 if (reAttestedOwnerPinkSlipAttestationData) {
