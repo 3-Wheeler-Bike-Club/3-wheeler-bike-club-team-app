@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         if (!reference) {
             return new Response(
                 JSON.stringify({
-                    error: "Reference not found",
+                    error: "cashramp payment not found",
                 }),
                 { status: 404 }
             );
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     } catch (error) {
         return new Response(
             JSON.stringify({
-                error: "Failed to fetch currency rate",
+                error: "Failed to fetch cashramp payment",
                 details: error
             }),
             { status: 500 }
