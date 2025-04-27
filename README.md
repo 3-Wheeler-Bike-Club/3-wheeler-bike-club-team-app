@@ -1,6 +1,6 @@
 # 3WB Team App
 
-A Next.js 14 TypeScript application for 3 wheeler bike club team hire-purchase management, including driver registration, order assignment, and member profiles.
+A Next.js 14 TypeScript application for 3 wheeler bike club team to run hire-purchase management, including driver registration, order assignment, and member profiles.
 
 ## 🚀 Features
 
