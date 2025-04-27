@@ -22,6 +22,7 @@ A Next.js 14 TypeScript application for 3 wheeler bike club team to run hire-pur
 - **UI**: Radix UI components, Lucide Icons, Framer Motion
 - **Auth**: @privy-io/react-auth & server-auth for user authentication
 - **Blockchain**: Sign Protocol SDK, Wagmi, Viem for Celo integration
+- **Backend**: Next.js API routes + Node.js
 - **Database**: MongoDB via Mongoose for backend persistence
 
 ## 🔧 Prerequisites
