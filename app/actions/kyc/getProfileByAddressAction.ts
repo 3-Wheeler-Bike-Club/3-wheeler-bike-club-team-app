@@ -6,7 +6,7 @@ export async function getProfileByEmailAction(email: string) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "x-api-key": process.env.THREEWB_API_KEY
+                "x-api-key": process.env.WHEELER_API_KEY
             },
             body: JSON.stringify({ email: email })
         })
