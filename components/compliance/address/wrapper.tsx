@@ -1,6 +1,6 @@
 interface WrapperProps {    
     address: string
-    user: any
+    user: string
 }
 
 export function Wrapper({ address, user }: WrapperProps) {
