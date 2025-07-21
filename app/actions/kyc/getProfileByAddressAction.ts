@@ -1,14 +1,14 @@
 "use server"
 
-export async function getProfileByEmailAction(email: string) {
+export async function getProfileByAddressAction(address: string) {
     try {
-        const response = await fetch(`${process.env.BASE_URL}/api/kyc/getProfileByEmail`, {
+        const response = await fetch(`${process.env.BASE_URL}/api/kyc/getProfileByAddress`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "x-api-key": process.env.WHEELER_API_KEY
             },
-            body: JSON.stringify({ email: email })
+            body: JSON.stringify({ address: address })
         })
         if (!response.ok) {
             throw new Error("Failed to get profile")
