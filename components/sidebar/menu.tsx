@@ -68,6 +68,21 @@ export function Menu() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   
+                <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      onClick={()=>{
+                        router.push("/compliance")
+                        setSidebarOpen(false)
+                      }}
+                      asChild
+                    >
+                      <div className="flex items-center gap-2">
+                        <Caravan size={18} color="gold"/>
+                        <span className="text-base font-semibold">Compliance</span>
+                      </div>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
 
                   <SidebarMenuItem>
                     <SidebarMenuButton 
