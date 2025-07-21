@@ -4,5 +4,7 @@ interface AuthorizedProps {
 }
 
 export function Authorized({ address, user }: AuthorizedProps) {
+    console.log(address)
+    console.log(user)
     return <div>Authorized</div>
 }
