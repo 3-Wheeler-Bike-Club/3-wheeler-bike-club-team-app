@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { Authorized } from "./authorized";
 import { Unauthorized } from "./unauthorized";
 import { useEffect } from "react";
-import { Profile } from "@/hooks/kyc/useGetProfile";
 
 interface WrapperProps {    
     address: string

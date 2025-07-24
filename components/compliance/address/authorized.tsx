@@ -8,7 +8,7 @@ interface AuthorizedProps {
 }
 
 export function Authorized({ address }: AuthorizedProps) {
-    const { profile, loading } = useGetProfile(address as `0x${string}`)
+    const { profile } = useGetProfile(address as `0x${string}`)
     const router = useRouter()
     
     console.log(profile)
