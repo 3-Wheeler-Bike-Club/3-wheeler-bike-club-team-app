@@ -4,6 +4,7 @@ declare global {
             NEXT_PUBLIC_PROJECT_ID: string
             MONGO: string
             WHEELER_API_KEY: string
+            THREEWB_API_KEY: string
             BASE_URL: string
             BASE_URL_FINANCE: string
             NEXT_PUBLIC_PRIVY_APP_ID: string

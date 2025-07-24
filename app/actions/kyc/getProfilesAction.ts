@@ -6,11 +6,11 @@ export async function getProfilesAction() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "x-api-key": process.env.WHEELER_API_KEY
+                "x-api-key": process.env.THREEWB_API_KEY
             }
         })
         if (!response.ok) {
-            throw new Error("Failed to get profile")
+            throw new Error("Failed to get profiles")
         }
         return response.json()
     } catch (error) {
