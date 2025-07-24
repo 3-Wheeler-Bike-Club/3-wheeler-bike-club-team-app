@@ -2,7 +2,7 @@
 
 export async function getProfilesAction() {
     try {
-        const response = await fetch(`${process.env.BASE_URL}/api/kyc/getProfiles`, {
+        const response = await fetch(`${process.env.BASE_URL_FINANCE}/api/kyc/getProfiles`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
