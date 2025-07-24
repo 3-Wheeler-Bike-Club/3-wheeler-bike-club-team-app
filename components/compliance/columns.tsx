@@ -41,11 +41,11 @@ export const Columns: ColumnDef<Profile>[] = [
         header: "Lastname",
     },
     {
-        accessorKey: "compliant",
-        header: "Compliant",
+        accessorKey: "id",
+        header: "id",
         cell: ({row}) => {
-            const compliant = (row.getValue("compliant"))
-            return <div>{compliant ? "Compliant" : "Non-Compliant"}</div>
+            const id = (row.getValue("id"))
+            return <div>{(id as string).toString().charAt(0).toUpperCase() + (id as string).slice(1)}</div>
         },
     },
     {

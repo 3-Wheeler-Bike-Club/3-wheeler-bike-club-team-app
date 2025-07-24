@@ -3,21 +3,21 @@
 
 "use client"
 
-//import { useRouter } from "next/navigation";
+import { usePrivy } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 import { Authorized } from "./authorized";
 import { Unauthorized } from "./unauthorized";
-import { useGetProfile } from "@/hooks/kyc/useGetProfile";
+import { useEffect } from "react";
 
 interface WrapperProps {    
     address: string
-    user: string
 }
 
-export function Wrapper({ address, user }: WrapperProps) {
-    //const { user, ready, authenticated } = usePrivy()
-    //const router = useRouter()
-    const { profile, loading } = useGetProfile(address as `0x${string}`)
-    /*
+export function Wrapper({ address }: WrapperProps) {
+    const { user, ready, authenticated } = usePrivy()
+    const router = useRouter()
+    
+    
 
     useEffect(() => {
         if (ready && authenticated && !user?.customMetadata) {
@@ -25,12 +25,12 @@ export function Wrapper({ address, user }: WrapperProps) {
         }
 
     }, [ready, authenticated, router, user?.customMetadata])
-    */
+    
     return (
         <>
         {
 
-            !loading 
+            !ready 
             ?(
                 <>
                     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -42,8 +42,8 @@ export function Wrapper({ address, user }: WrapperProps) {
                 <>
                     <main className="flex w-full h-full">
                     {
-                        profile
-                        ? <Authorized address={address} user={user}/>
+                        authenticated
+                        ? <Authorized address={address} />
                         : <Unauthorized/>
                     }
                     </main>
