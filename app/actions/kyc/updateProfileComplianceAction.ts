@@ -1,7 +1,7 @@
 "use server"
 
 
-export async function updateProfileAction(
+export async function updateProfileComplianceAction(
     address: `0x${string}`,
     firstname: string,
     othername: string,
@@ -10,7 +10,7 @@ export async function updateProfileAction(
     files: string[]
 ) {
     try {
-        const response = await fetch(`${process.env.BASE_URL}/api/kyc/updateProfile`, {
+        const response = await fetch(`${process.env.BASE_URL}/api/kyc/updateProfileCompliance`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

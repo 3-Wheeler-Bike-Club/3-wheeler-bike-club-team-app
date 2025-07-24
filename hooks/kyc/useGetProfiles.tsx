@@ -1,17 +1,8 @@
 import { getProfilesAction } from "@/app/actions/kyc/getProfilesAction"
 import { useEffect, useState } from "react"
+import { Profile } from "./useGetProfile"
 
 
-export interface Profile {
-    address: `0x${string}`
-    email: string
-    phone: string
-    firstname: string
-    othername: string
-    lastname: string
-    id: string
-    files: string[]
-}
 
 export const useGetProfiles = () => {
     const [profiles, setProfiles] = useState<Profile[] | null>(null)

@@ -12,6 +12,7 @@ export interface Profile {
     lastname: string
     id: string
     files: string[]
+    compliant: boolean
 }
 
 export const useGetProfile = (address: `0x${string}` | undefined) => {

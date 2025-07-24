@@ -1,5 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { memberBadgeAttestationStatusCodes } from "@/utils/constants/misc";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -12,18 +11,8 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { trimRef } from "@/utils/trim";
+import { Profile } from "@/hooks/kyc/useGetProfile";
 
-
-interface Profile {
-    address: `0x${string}`
-    email: string
-    phone: string
-    firstname: string
-    othername: string
-    lastname: string
-    id: string
-    files: string[]
-}
 
 export const Columns: ColumnDef<Profile>[] = [
     
@@ -48,15 +37,15 @@ export const Columns: ColumnDef<Profile>[] = [
         header: "Firstname",
     },
     {
-        accessorKey: "othername",
-        header: "Othername",
+        accessorKey: "lastname",
+        header: "Lastname",
     },
     {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "compliant",
+        header: "Compliant",
         cell: ({row}) => {
-            const statusCode = (row.getValue("status"))
-            return <div>{memberBadgeAttestationStatusCodes[statusCode as keyof typeof memberBadgeAttestationStatusCodes]}</div>
+            const compliant = (row.getValue("compliant"))
+            return <div>{compliant ? "Compliant" : "Non-Compliant"}</div>
         },
     },
     {
