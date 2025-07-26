@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useGetProfile } from "@/hooks/kyc/useGetProfile"
 import { fleetOrderBookAbi } from "@/utils/abis/fleetOrderBook"
-import { publicClient, walletClient } from "@/utils/client"
+import { publicClient } from "@/utils/client"
 import { fleetOrderBook } from "@/utils/constants/addresses"
 import { trimRef } from "@/utils/trim"
 import { useQueryClient } from "@tanstack/react-query"
@@ -57,6 +57,7 @@ export function Authorized({ address }: AuthorizedProps) {
                 if (updatedProfile && profile) {
                     // send email to user
                     const email = await sendProfileVerifiedMail(profile?.email, profile?.firstname)
+                    console.log(email)
                     setLoading(false)
                 }
             }
@@ -66,7 +67,7 @@ export function Authorized({ address }: AuthorizedProps) {
         }           
     }
 
-
+/*
     async function handleRejectedCompliance() {
         setLoading(true)
         try {
@@ -76,7 +77,7 @@ export function Authorized({ address }: AuthorizedProps) {
             setLoading(false)
         }           
     }
-
+*/
     console.log(profile)
     return (
         <main className="flex h-full w-full">
