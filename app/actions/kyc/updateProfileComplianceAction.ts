@@ -3,11 +3,6 @@
 
 export async function updateProfileComplianceAction(
     address: `0x${string}`,
-    firstname: string,
-    othername: string,
-    lastname: string,
-    id: string,
-    files: string[]
 ) {
     try {
         const response = await fetch(`${process.env.BASE_URL}/api/kyc/updateProfileCompliance`, {
@@ -18,11 +13,6 @@ export async function updateProfileComplianceAction(
             },
             body: JSON.stringify({ 
                 address: address,
-                firstname: firstname,
-                othername: othername,
-                lastname: lastname,
-                id: id,
-                files: files
             })
         })
         if (!response.ok) {

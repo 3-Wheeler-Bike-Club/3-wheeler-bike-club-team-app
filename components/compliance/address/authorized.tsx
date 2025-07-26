@@ -1,8 +1,11 @@
+import { updateProfileComplianceAction } from "@/app/actions/kyc/updateProfileComplianceAction"
+import { sendProfileVerifiedMail } from "@/app/actions/mail/sendProfileVerifiedMail"
 import { Menu } from "@/components/topnav/menu"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useGetProfile } from "@/hooks/kyc/useGetProfile"
 import { fleetOrderBookAbi } from "@/utils/abis/fleetOrderBook"
+import { publicClient, walletClient } from "@/utils/client"
 import { fleetOrderBook } from "@/utils/constants/addresses"
 import { trimRef } from "@/utils/trim"
 import { useQueryClient } from "@tanstack/react-query"
@@ -42,14 +45,25 @@ export function Authorized({ address }: AuthorizedProps) {
     async function handleCompliance() {
         setLoading(true)
         try {
-
-            // TODO: Implement compliance logic
-
-
-
-
-
-
+            // set compliance to true
+            const tx = await walletClient.writeContract({
+                address: fleetOrderBook,
+                abi: fleetOrderBookAbi,
+                functionName: "setCompliance",
+                args: [[address as `0x${string}`]],
+            })
+            const receipt = await publicClient.waitForTransactionReceipt({ hash: tx })
+            console.log(receipt)
+            if (receipt.status === "success") {
+                // update profile
+                const updatedProfile = await updateProfileComplianceAction(address as `0x${string}`)
+                console.log(updatedProfile)
+                if (updatedProfile && profile) {
+                    // send email to user
+                    const email = await sendProfileVerifiedMail(profile?.email, profile?.firstname)
+                    console.log(email)
+                }
+            }
             setLoading(false)
         } catch (error) {
             console.log(error)

@@ -5,6 +5,8 @@ declare global {
             MONGO: string
             WHEELER_API_KEY: string
             THREEWB_API_KEY: string
+            FINANCE_3WB_USER: string;
+            FINANCE_3WB_PASS: string;
             BASE_URL: string
             BASE_URL_FINANCE: string
             NEXT_PUBLIC_PRIVY_APP_ID: string
