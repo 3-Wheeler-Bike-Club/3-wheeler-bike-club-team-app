@@ -1,4 +1,6 @@
+import { updateProfileAction } from "@/app/actions/kyc/updateProfileAction"
 import { updateProfileComplianceAction } from "@/app/actions/kyc/updateProfileComplianceAction"
+import { sendProfileReviewMail } from "@/app/actions/mail/sendProfileReviewMail"
 import { sendProfileVerifiedMail } from "@/app/actions/mail/sendProfileVerifiedMail"
 import { setCompliance } from "@/app/actions/setCompliance"
 import { Menu } from "@/components/topnav/menu"
@@ -10,7 +12,7 @@ import { publicClient } from "@/utils/client"
 import { fleetOrderBook } from "@/utils/constants/addresses"
 import { trimRef } from "@/utils/trim"
 import { useQueryClient } from "@tanstack/react-query"
-import { ArrowLeft, Loader2, UserRoundCheck, User, Mail, FileText, CheckCircle, XCircle } from "lucide-react"
+import { ArrowLeft, Loader2, UserRoundCheck, User, Mail, FileText, CheckCircle, XCircle, UserRoundX } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useBlockNumber, useReadContract } from "wagmi"
@@ -67,17 +69,32 @@ export function Authorized({ address }: AuthorizedProps) {
         }           
     }
 
-/*
+
     async function handleRejectedCompliance() {
         setLoading(true)
         try {
-            // set compliance to false
+            // upddate profile to start kyc over
+            const updatedProfile = await updateProfileAction(
+                address as `0x${string}`,
+                "",
+                "",
+                "",
+                "",
+                []
+            )
+            console.log(updatedProfile)
+            if (updatedProfile && profile) {
+                // send email to user
+                const email = await sendProfileReviewMail(profile?.email, profile?.firstname)
+                console.log(email)
+                setLoading(false)
+            }
         } catch (error) {
             console.log(error)
             setLoading(false)
         }           
     }
-*/
+
     console.log(profile)
     return (
         <main className="flex h-full w-full">
@@ -233,29 +250,38 @@ export function Authorized({ address }: AuthorizedProps) {
                                     </div>
                                 </div>
                             </div>
+                            <div className="flex flex-col w-full justify-center items-center">
+                                <div className="flex w-full max-w-[66rem] justify-end">
+                                    {!compliant
+                                        && (
+                                            <>
+                                                <div className="flex gap-4">
+                                                    <Button variant="destructive" onClick={handleRejectedCompliance} disabled={loading}>
+                                                        {
+                                                            loading
+                                                            ? <Loader2 className="h-8 w-8 animate-spin" />
+                                                            : <UserRoundX className="h-8 w-8" />
+                                                        }
+                                                        <p className="text-lg font-bold">Review Investor</p>
+                                                    </Button>
+                                                    <Button variant="outline" onClick={handleApprovedCompliance} disabled={loading}>
+                                                        {
+                                                            loading
+                                                            ? <Loader2 className="h-8 w-8 animate-spin" />
+                                                            : <UserRoundCheck className="h-8 w-8" />
+                                                        }
+                                                        <p className="text-lg font-bold">Verify Investor</p>
+                                                    </Button>
+                                                </div>
+                                                </>   
+                                        )
+                                    }
+                                </div>
+                            </div>  
                         </>
                     )
 
                 }
-                
-                <div className="flex flex-col w-full justify-center items-center">
-                    <div className="flex w-full max-w-[66rem] justify-end">
-                        <Button variant="outline" onClick={handleApprovedCompliance} disabled={loading || compliant}>
-                            {
-                                loading
-                                ? <Loader2 className="h-8 w-8 animate-spin" />
-                                : <UserRoundCheck className="h-8 w-8" />
-                            }
-                            {
-                                compliant
-                                ? <p className="text-lg font-bold">Compliant</p>
-                                : <p className="text-lg font-bold">Verify Investor</p>
-                            }
-                        </Button>
-                    </div>
-                </div>  
-
-                
                 
             </div>
         </main>
