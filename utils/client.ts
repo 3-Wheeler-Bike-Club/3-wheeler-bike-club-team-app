@@ -1,3 +1,5 @@
+"use server"
+
 import { Chain, createPublicClient, createWalletClient, http } from 'viem'
 import { celo } from 'viem/chains'
 import { privateKeyToAccount } from 'viem/accounts'
