@@ -15,7 +15,7 @@ export function Authorized() {
 
     useEffect(() => {
         if (profiles) {
-            const filtered = profiles.filter(profile => profile.compliant === false)
+            const filtered = profiles.filter(profile => profile.compliant === false && profile.files?.length > 0)
             setProfilesPendingCompliance(filtered)
         }
     }, [profiles])
